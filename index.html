@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101114" />
+  <title>Cursed Circuit — Sorcerer Defense</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" data-view="battle" aria-label="Cursed Circuit home"><span class="brand-mark">呪</span><span class="brand-copy"><b>CURSED<span> CIRCUIT</span></b><small>SHIBUYA DEFENSE DIVISION</small></span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-btn active" data-view="battle"><span>◈</span> BATTLE</button>
+        <button class="nav-btn" data-view="units"><span>♟</span> SORCERERS</button>
+        <button class="nav-btn" data-view="recruit"><span>✦</span> RECRUIT</button>
+        <button class="nav-btn" data-view="forge"><span>⚒</span> CURSED FORGE</button>
+      </nav>
+      <div class="player-resources"><div class="resource"><i class="coin-icon">¥</i><b id="coin-count">850</b><small>COINS</small></div><div class="resource"><i class="shard-icon">◆</i><b id="shard-count">120</b><small>SHARDS</small></div><button class="profile" title="Player profile">YU<span>12</span></button></div>
+      <button class="mobile-menu" aria-label="Open menu">☰</button>
+    </header>
+
+    <main>
+      <section id="view-battle" class="view active-view">
+        <div class="battle-heading"><div><div class="eyebrow"><span class="live-dot"></span> TOKYO PREFECTURAL JUJUTSU HIGH</div><h1>SHIBUYA <em>INCIDENT</em></h1><p class="heading-sub">The veil is up. Hold the line, sorcerer.</p></div><div class="rank-badge"><span>FIELD RANK</span><b>GRADE <i>2</i></b><div class="rank-progress"><i></i></div><small>1,240 / 2,000 XP</small></div></div>
+        <div class="battle-layout">
+          <aside class="mission-panel">
+            <div class="panel-kicker">ACTIVE OPERATION <span class="status-pill">INCOMING</span></div>
+            <div class="mission-art"><div class="moon"></div><div class="tower silhouette-a"></div><div class="tower silhouette-b"></div><div class="veil-rune">呪</div><div class="mission-art-label"><small>TOKYO • NIGHT 04</small><b>THE VEIL<br>OVER SHIBUYA</b></div></div>
+            <div class="mission-info"><div class="mission-title"><div><small id="mission-mode-label">STORY MISSION 01</small><h2 id="mission-title">A CURSED<br>WELCOMING</h2></div><div class="chapter">CH.01</div></div><p id="mission-description">A swarm of low-grade curses has breached the station. Clear the platform before the veil collapses.</p><div class="mission-stats"><div><small>THREAT</small><b class="threat">● ● ○ ○ ○</b></div><div><small>WAVES</small><b id="wave-total">05</b></div><div><small>REWARD</small><b class="reward-text">+180 <i>¥</i></b></div></div></div>
+            <div class="mode-select"><button class="mode-option selected" data-mode="story"><span>01</span><b>STORY</b><small>Follow the incident</small><i>›</i></button><button class="mode-option" data-mode="boss"><span>02</span><b>BOSS RUSH</b><small>One enemy. No mercy.</small><i>›</i></button></div>
+            <div class="mission-actions"><button id="start-battle" class="primary-btn"><span>▶</span> DEPLOY SQUAD</button><button id="next-stage" class="icon-btn" title="Change stage">↻</button></div>
+            <div class="briefing"><span>✦</span><p><b>FIELD TIP</b> Place units near the path. Pair different techniques to cover every angle.</p></div>
+          </aside>
+
+          <section class="combat-panel">
+            <div class="combat-top"><div class="stage-label"><span class="stage-icon">✣</span><div><small>SHIBUYA STATION • PLATFORM B</small><b id="stage-name">CURSED PLATFORM</b></div></div><div class="combat-status"><span id="battle-state" class="state-tag">STANDBY</span><div class="hearts" id="lives"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></div><span class="lives-label">VEIL INTEGRITY</span></div></div>
+            <div class="board-wrap"><canvas id="game-canvas" width="900" height="500" aria-label="Tower defense battlefield"></canvas><div class="board-hint" id="board-hint"><span>✥</span> SELECT A SORCERER BELOW, THEN TAP A GLOWING TILE</div><div class="wave-toast" id="wave-toast">WAVE 01</div><div class="result-modal" id="result-modal"><div class="result-stamp" id="result-stamp">CLEARED</div><h2 id="result-title">PLATFORM SECURED</h2><p id="result-copy">The veil holds. The city owes you one.</p><div class="result-rewards" id="result-rewards">+180 ¥ &nbsp; +40 ◆</div><button class="primary-btn" id="result-continue">CONTINUE</button></div></div>
+            <div class="battle-controls"><div class="battle-meta"><span class="wave-counter">WAVE <b id="wave-current">0</b><i>/</i><span id="wave-count">5</span></span><div class="wave-progress"><i id="wave-progress-fill"></i></div></div><div class="control-actions"><button id="speed-btn" class="control-btn" title="Battle speed">» <small>1×</small></button><button id="pause-btn" class="control-btn" title="Pause battle">Ⅱ <small>PAUSE</small></button><button id="domain-btn" class="domain-btn" disabled><span>◉</span> DOMAIN <small id="domain-charge">0%</small></button></div></div>
+            <div class="deployment-bar"><div class="deployment-head"><div><small>YOUR SQUAD</small><b>DEPLOYMENT <span id="squad-count">0 / 4</span></b></div><button class="text-link" data-view="units">EDIT SQUAD ↗</button></div><div class="unit-cards" id="deployment-cards"></div></div>
+            <div class="unit-inspector" id="unit-inspector"><span class="inspector-icon">✣</span><div class="inspector-copy"><small>FIELD INTEL</small><b id="inspector-title">CHOOSE YOUR FORMATION</b><span id="inspector-description">Tap a unit, then choose a glowing tile to deploy.</span></div><div class="inspector-actions"><button id="upgrade-unit" class="upgrade-btn" disabled>UPGRADE <span>¥<i id="upgrade-cost">80</i></span></button><button id="sell-unit" class="sell-btn" disabled>RECALL</button></div></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="view-units" class="view secondary-view">
+        <div class="section-heading"><div><div class="eyebrow">YOUR CURSED TECHNIQUES</div><h1>SORCERER <em>ROSTER</em></h1><p>Equip up to four sorcerers for your next deployment.</p></div><div class="roster-counter"><b id="roster-owned">03</b><small>UNITS OWNED</small></div></div>
+        <div class="roster-grid" id="roster-grid"></div>
+        <div class="bottom-callout"><span>✣</span><div><b>EVOLVE YOUR SORCERERS</b><small>Collect duplicate shards from recruitment to unlock their full potential.</small></div><button class="outline-btn" data-view="forge">VISIT THE FORGE ↗</button></div>
+      </section>
+
+      <section id="view-recruit" class="view secondary-view">
+        <div class="recruit-hero"><div class="recruit-copy"><div class="eyebrow"><span class="live-dot"></span> TOKYO JUJUTSU HIGH • RECRUITMENT OFFICE</div><h1>THE NEXT<br><em>GENERATION</em></h1><p>Every technique has a price. Every sorcerer has a story.<br>Find your next ace in the hole.</p><div class="banner-odds"><span>✦ LIMITED BANNER</span><b>CURSED PRODIGIES</b><small>Rate up: Satoru Gojo • Nobara Kugisaki</small></div></div><div class="recruit-art"><div class="art-ring"></div><div class="art-sigil">無</div><div class="art-silhouette"></div><div class="floating-tag">GRADE<br><b>SPECIAL</b></div></div></div>
+        <div class="recruit-options"><article class="pull-card"><div class="pull-symbol">✦</div><div><small>STANDARD RECRUIT</small><h3>SINGLE DRAW</h3><p>One sorcerer or technique shard</p></div><button class="pull-btn" data-pull="1"><b>RECRUIT</b><span>150 <i>◆</i></span></button></article><article class="pull-card featured"><div class="pull-symbol">✧</div><div><small>BEST VALUE <span class="limited">10% BONUS</span></small><h3>10× RECRUIT</h3><p>Guaranteed rare or better</p></div><button class="pull-btn" data-pull="10"><b>RECRUIT ×10</b><span>1,350 <i>◆</i></span></button></article></div>
+        <div class="recruit-foot"><span>✦</span> Every recruit is guaranteed to advance your roster. Duplicate sorcerers convert into evolution shards.</div>
+      </section>
+
+      <section id="view-forge" class="view secondary-view">
+        <div class="section-heading"><div><div class="eyebrow">TOKYO JUJUTSU HIGH • BASEMENT WORKSHOP</div><h1>CURSED <em>FORGE</em></h1><p>Turn scraps from the battlefield into power.</p></div><div class="forge-mark">⚒</div></div>
+        <div class="forge-layout"><div class="forge-main"><div class="forge-tabs"><button class="forge-tab active" data-forge="craft">✣ CRAFT</button><button class="forge-tab" data-forge="evolve">↗ EVOLVE</button></div><div id="forge-craft" class="forge-content active"><div class="recipe-card"><div class="recipe-art"><span>✦</span><i>呪</i></div><div class="recipe-details"><div class="eyebrow">FIELD KIT • COMMON</div><h2>CURSED ENERGY CELL</h2><p>Compressed residue from a defeated curse. Useful for strengthening any technique.</p><div class="ingredients"><span><i>◆</i> 40 SHARDS</span><span><i>¥</i> 100 COINS</span><b>→</b><span><i>✦</i> 1 ENERGY CELL</span></div></div><button class="craft-btn" id="craft-cell">CRAFT ITEM <small>100 ¥ + 40 ◆</small></button></div><div class="inventory-note"><span>✣</span><div><b>YOUR MATERIALS</b><small>Energy Cells: <strong id="cell-count">0</strong> <span>•</span> Curse Fragments: <strong id="fragment-count">2</strong></small></div></div></div><div id="forge-evolve" class="forge-content"><div class="evolve-placeholder"><div class="evolve-symbol">↗</div><h2>CHOOSE A SORCERER</h2><p>Select an owned sorcerer below to awaken their innate technique.</p><div id="evolve-list" class="evolve-list"></div></div></div></div><aside class="forge-sidebar"><div class="forge-tip"><small>FORGE MASTER'S NOTE</small><div class="tip-quote">“Power isn't found. It's <em>refined</em>.”</div><p>Crafted items can be spent to evolve units and unlock stronger attacks. Choose wisely, sorcerer.</p><div class="tip-sign">— Kiyotaka Ijichi, Assistant Manager</div></div><div class="fragment-box"><span>☷</span><div><small>CURSE FRAGMENTS</small><b id="forge-fragments">2</b></div><small>Earn them by clearing missions.</small></div></aside></div>
+      </section>
+    </main>
+    <footer><span>© 2018 TOKYO JUJUTSU HIGH</span><span>CURSED ENERGY DETECTED <i class="live-dot"></i></span><span>BUILD 0.9.4 • SHIBUYA INCIDENT</span></footer>
+    <div id="toast" class="toast" role="status"></div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
